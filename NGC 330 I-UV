@@ -1,0 +1,16 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import glob, os
+import pandas as pd
+
+# imports the data and adds a column for F336W - F814W
+# use .tex
+data = pd.read_excel (r'D:\\Astro Research\\NGC 330 IR and UV.xlsx') 
+data["F336W-F814W"] = data["F336W"] - data["F814W"]
+print(data)
+
+# Makes the graph
+df = pd.DataFrame(data, columns=["F814W", "F336W-F814W"])
+df.plot.scatter(x="F336W-F814W", y="F814W", color = 'grey', figsize = [10,10])
+plt.xlim(-4, 7)
+plt.gca().invert_yaxis()

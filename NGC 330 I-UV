@@ -3,14 +3,22 @@ import numpy as np
 import glob, os
 import pandas as pd
 
-# imports the data and adds a column for F336W - F814W
-# use .tex
-data = pd.read_excel (r'D:\\Astro Research\\NGC 330 IR and UV.xlsx') 
-data["F336W-F814W"] = data["F336W"] - data["F814W"]
-print(data)
+X = []
+Y = []
 
-# Makes the graph
-df = pd.DataFrame(data, columns=["F814W", "F336W-F814W"])
-df.plot.scatter(x="F336W-F814W", y="F814W", color = 'grey', figsize = [10,10])
-plt.xlim(-4, 7)
+for line in open('C:\\Users\\mcgee\\Desktop\\'+ 'NGC0330.XYMBe', 'r'):
+  values = [float(s) for s in line.split()]
+  X.append(values[2])
+  Y.append(values[5])
+
+i = 0
+
+for i in range(len(X)):
+    Y[i] = Y[i] - X[i]
+    
+plt.figure(figsize=(15,12))
+plt.plot(Y, X, 'ro', color = 'grey')
+plt.xlabel("I Magnitude", fontsize = 22)
+plt.ylabel("I-UV Magnitude", fontsize = 22)
+plt.xlim(-6,4)
 plt.gca().invert_yaxis()
